@@ -4,16 +4,13 @@
     <div class="tab">
   <button class="tablinks" ><router-link to="/login">Login</router-link></button>
   <button class="tablinks" ><router-link to="/register">Register</router-link></button>
-  <ejs-button>Button</ejs-button>
+  
 </div>
 
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
-import { ButtonPlugin } from '@syncfusion/ej2-vue-buttons';
-Vue.use(ButtonPlugin);
 export default {
   name: 'WelcomeScreen',
 }
