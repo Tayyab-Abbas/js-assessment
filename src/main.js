@@ -4,6 +4,7 @@ import App from './App.vue'
 import { routes } from './routes'
 import Vuelidate from 'vuelidate';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/global.css'
 
 import VueAxios from 'vue-axios'
 import axios from 'axios'

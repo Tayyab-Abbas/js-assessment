@@ -1,18 +1,35 @@
 <template>
-  <div class="welcomeScreen">
-    <h1>Welcome To My WelcomeScreen</h1>
-    <div class="tab">
-  <button class="tablinks" ><router-link to="/login">Login</router-link></button>
-  <button class="tablinks" ><router-link to="/register">Register</router-link></button>
-  
-</div>
-
+  <div class="container">
+  <div class="loginScreen">
+  <div class="login-body">
+    <div class="card-cover">
+      <div class="welcome-card p-4 p-sm-3 ">
+        <div class="head-title">
+              <h2>Welcome to Project</h2>
+        </div>
+        <br/><br/>
+  <div class="tab">
+  <button class="tablinks" @click="loginUser">Login</button>
+  <button class="tablinks" @click="signUp">Register</button>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'WelcomeScreen',
+  methods:{
+    signUp(){
+              this.$router.push('/register');
+            },
+    loginUser(){
+              this.$router.push('/register');
+            }
+  }
 }
 </script>
 
@@ -46,5 +63,12 @@ export default {
 }
 
 /* Style the tab content */
+
+.tab button{
+  width: 50%;
+}
+.tablinks a{
+  text-decoration: none;
+}
 
 </style>
