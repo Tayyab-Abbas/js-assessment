@@ -1,6 +1,4 @@
- name: 'LoginScreen',
- 
- <template>
+<template>
   <div class="container">
   <div class="loginScreen">
   <div class="login-body">
@@ -55,6 +53,7 @@
                   email: "",
                   password: "",
               },
+              token:'xyz',
               isValid: false
           };
       },
@@ -78,8 +77,11 @@
                   return;
               }
 
-              this.axios.post('http://localhost:8888/contacts', this.contacts).then((response) => {
-                  this.resetForm();
+
+              this.axios.post('https://jsonendpoint.com/my-unique/endpoint/73wdw', this.contacts).then((response) => {
+                //   this.resetForm();
+                  window.localStorage.setItem('accessToken', this.token)
+                  this.$router.push('/');
                   console.log(response.data);
               })
           },

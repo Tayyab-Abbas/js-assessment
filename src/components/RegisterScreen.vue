@@ -96,7 +96,7 @@
                 }
   
                 this.axios.post('http://localhost:8888/contacts', this.contacts).then((response) => {
-                    this.resetForm();
+                    // this.resetForm();
                     console.log(response.data);
                 })
             },
