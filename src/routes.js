@@ -7,21 +7,21 @@ import UpdateTodo from './components/UpdateTodoScreen.vue'
 
 export const routes =[
     {
-        path:'/', component: Welcome
+        path:'/', component: Welcome,
     },
     {
-        path:'/login', component: Login
+        path:'/login', component: Login,
     },
     {
-        path:'/register', component: Register
+        path:'/register', component: Register,
     },
     {
-        path:'/todolist', component: TodoList
+        path:'/todolist', component: TodoList,
     },
     {
-        path:'/createtodo', component: CreateTodo
+        path:'/createtodo', component: CreateTodo,
     },
     {
-        path:'/updatetodo', component: UpdateTodo
+        path:'/updatetodo', component: UpdateTodo,
     }
 ];

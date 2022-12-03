@@ -46,6 +46,7 @@ export default {
               title:'',
               description:'',
               isValid:false,
+              tokenAvailable:"",
           };
       },
       validations: {
@@ -56,25 +57,32 @@ export default {
         description: {
                   required,
               },
+              
           
       },
       methods:{
       onFormSubmit() {              
               this.isValid = true;
-
               this.$v.$touch();
               if (this.$v.$invalid) {
                   return;
               }
 
-
-              this.axios.post('https://jsonendpoint.com/my-unique/endpoint/73wdw', this.contacts).then((response) => {
-                //   this.resetForm();
-                  this.$router.push('/todolist');
-                  console.log(response.data);
+              let object={
+                title:this.title,
+                description:this.description,
+              }
+              this.axios.post('http://3.232.244.22/api/item', object ,{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`}}).then((response) => {
+                this.$router.push('/');
+                console.log(response.data);
               })
           },
         },
+        mounted(){
+            let tokenAvailable=window.localStorage.getItem('accessToken');
+            this.tokenAvailable = tokenAvailable;
+
+          },
 }
 </script>
 

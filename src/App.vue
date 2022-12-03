@@ -1,5 +1,11 @@
 <template>
-  <div id="app">
+  <div id="app" :key="counter">
+    <div class="dropdown" v-if="tokenAvailable!='null'" >
+  <button class="dropbtn">Profile</button>
+  <div class="dropdown-content">
+  <a href="#" @click="logoutUser">Logout</a>
+  </div>
+   </div>
     <router-view></router-view>
   </div>
 </template>
@@ -8,6 +14,42 @@
 
 export default {
   name: 'App',
+  data() {
+          return {
+            tokenAvailable:'null',
+            counter:1,
+          };
+      },
+  mounted(){
+    let tokenAvailable=window.localStorage.getItem('accessToken');
+    this.tokenAvailable = tokenAvailable;
+    console.log(this.tokenAvailable)
+
+  },
+  updated() {
+    let tokenAvailable=window.localStorage.getItem('accessToken');
+    this.tokenAvailable = tokenAvailable;
+    console.log(this.tokenAvailable)
+    },
+  created() {
+      let tokenAvailable=window.localStorage.getItem('accessToken');
+    this.tokenAvailable = tokenAvailable;
+    console.log(this.tokenAvailable)
+    },
+  watch: {
+    tokenAvailable(val) {
+            if (val) {
+              this.counter=this.counter+=1;
+            }
+            }
+    },
+  methods:{
+    logoutUser(){
+      window.localStorage.setItem('accessToken', null);
+      this.tokenAvailable="null";
+      this.$router.push('/');
+   }
+  },
 
   
  
@@ -15,12 +57,47 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+.dropbtn {
+  background-color: peachpuff;
+  color: black;
+  padding: 16px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  float: right;
+  z-index: 2;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: coral;
+  min-width: 89px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: peachpuff;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: white;
 }
 </style>

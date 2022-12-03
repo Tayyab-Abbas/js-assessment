@@ -76,13 +76,18 @@
               if (this.$v.$invalid) {
                   return;
               }
-
-
-              this.axios.post('https://jsonendpoint.com/my-unique/endpoint/73wdw', this.contacts).then((response) => {
+              this.axios.post('http://3.232.244.22/api/login', this.contacts,{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`}}).then((response) => {
                 //   this.resetForm();
-                  window.localStorage.setItem('accessToken', this.token)
+                console.log(response.data);
+                if(response.data.success==true)
+                 {window.localStorage.setItem('accessToken', response.data.user.token)
                   this.$router.push('/');
-                  console.log(response.data);
+                  } 
+                  else{
+                    console.log("Api failed");
+                    window.localStorage.setItem('accessToken', 'null')
+
+                  }
               })
           },
           signUp(){

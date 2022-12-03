@@ -2,16 +2,6 @@
   <div class="container">
   <div class="loginScreen">
   <div class="login-body">
-
-
-    <div class="dropdown" v-if="tokenAvailable!='null'">
-  <button class="dropbtn">Profile</button>
-  <div class="dropdown-content">
-  <a href="#" @click="logoutUser">Logout</a>
-  </div>
-   </div>
-
-
   <div class="card-cover" v-if="tokenAvailable=='null'">
       <div class="welcome-card p-4 p-sm-3 ">
         <div class="head-title">
@@ -28,21 +18,17 @@
 <TodoList
 v-if="tokenAvailable!='null'"
 ></TodoList>
-
-<CreateTodoScreen
-v-if="tokenAvailable!='null'"
-></CreateTodoScreen>
   </div>
   </div>
   </div>
 </template>
 
 <script>
-import CreateTodoScreen from './CreateTodoScreen.vue'
+/* eslint-disable */
 import TodoList from './TodoList.vue'
 export default {
   name: 'WelcomeScreen',
-  components:{CreateTodoScreen,TodoList},
+  components:{TodoList},
   data() {
           return {
             tokenAvailable:'null',
@@ -55,29 +41,12 @@ export default {
     loginUser(){
               this.$router.push('/login');
             },
-    logoutUser(){
-      window.localStorage.setItem('accessToken', null);
-      this.tokenAvailable="null";
-      this.$router.push('/');
-            }
   },
-  mounted: function (){
+  mounted(){
     let tokenAvailable=window.localStorage.getItem('accessToken');
     this.tokenAvailable = tokenAvailable;
-    console.log(this.tokenAvailable)
-
   },
-  // watch: {
-  //   // whenever question changes, this function will run
-  //   tokenAvailable(newtokenAvailable, oldtokenAvailable) {
-  //     if (newtokenAvailable==null) {
-  //       this.tokenAvailable=null;
-  //     }
-  //     if (oldtokenAvailable==null) {
-  //       console.log(this.tokenAvailable)
-  //     }
-  //   }
-  // },
+  
 }
 </script>
 
@@ -118,46 +87,5 @@ export default {
 .tablinks a{
   text-decoration: none;
 }
-.dropbtn {
-  background-color: peachpuff;
-  color: black;
-  padding: 16px;
-  font-size: 20px;
-  border: none;
-  cursor: pointer;
-}
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-  float: right;
-  z-index: 2;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: coral;
-  min-width: 89px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {background-color: peachpuff;}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .dropbtn {
-  background-color: white;
-}
 </style>
