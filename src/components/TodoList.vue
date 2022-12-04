@@ -1,12 +1,14 @@
 <template>
   <div class="todoList">
-    <h1>Welcome To My TodoList</h1>
+    <div class="headTitle" >
+      <h1 >Welcome To My TodoList</h1>
+    </div>
     <template>
-  <b-container fluid>
+  <b-container fluid >
     <!-- User Interface controls -->
     <b-row>
 
-      <b-col lg="4" class="my-1">
+      <b-col lg="4" class="my-1 ">
         <b-form-group
           label="Filter"
           label-for="filter-input"
@@ -30,11 +32,10 @@
         </b-form-group>
       </b-col>
 
-      <b-col lg="4" class="my-1">
+      <b-col lg="4" class="my-1 ">
         <b-form-group
           v-model="sortDirection"
           label="Filter On"
-          description="Leave all unchecked to filter on all data"
           label-cols-sm="3"
           label-align-sm="right"
           label-size="sm"
@@ -45,42 +46,45 @@
             v-model="filterOn"
             class="mt-1"
           >
-            <b-form-checkbox value="description">Description</b-form-checkbox>
-            <b-form-checkbox value="title">Title</b-form-checkbox>
+            <b-form-checkbox value="description" ><span class="txt-check">Description</span></b-form-checkbox>
+            <b-form-checkbox value="title"><span class="txt-check">Title</span></b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
       </b-col>
-      <b-col lg="4" class="my-1">
-        <b-button size="sm" @click="createRow">
+      <b-col lg="4" class="my-1 itemCl">
+        <b-button size="sm" @click="createRow" class="clearbtn">
            Create Todo
         </b-button>
       </b-col>
     </b-row>
-
+<div style="height: 640px; 
+overflow-y: scroll !important; background-color: white;"  v-on:scroll.capture="onScroll">
     <b-table
       :items="items"
       :fields="fields"
       :filter="filter"
       :filter-included-fields="filterOn"
-      stacked="md"
       show-empty
       small
+      hover
       @filtered="onFiltered"
     >
       <template #cell(description)="row">
-        {{ row.item.description}} 
+        {{ row.item.description}}
       </template>
 
-      <template #cell(actions)="row">
-        <b-button size="sm" @click="infoRow(row.item, row.index, $event.target)" class="mr-1">
+      <template #cell(actions)="row" >
+       <div class="btnTable">
+        <b-button size="sm" @click="infoRow(row.item, row.index, $event.target)" class="mr-1 tableBtn tableBtn1">
           View/Update
         </b-button>
-        <b-button size="sm" @click="deleteRow(row.item, row.index, $event.target)">
+        <b-button size="sm" @click="deleteRow(row.item, row.index, $event.target)" class="tableBtn tableBtn2">
            Delete
         </b-button>
+       </div>
       </template>
     </b-table>
-
+  </div>
     <!-- Info modal -->
     <!-- <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
       <pre>{{ infoModal.content }}</pre>
@@ -98,10 +102,14 @@ export default {
   data(){
     return {
         items: [],
+        tableSize:0,
+        page:1,
+        lastPage:null,
         fields: [
           { key: 'description', label: 'Description', sortable: false, sortDirection: 'desc' },
-          { key: 'title', label: 'title', sortable: false, class: 'text-center' },
-          { key: 'actions', label: 'Actions' }
+          { key: 'title', label: 'Title', sortable: false, class: 'text-center' },
+          { key: 'actions', label: 'Actions' },
+          
         ],
         totalRows: 1,
 
@@ -122,21 +130,47 @@ computed: {
             this.tokenAvailable = tokenAvailable;
             this.totalRows = this.items.length;
             this.getData();
-
+            window.addEventListener("scroll",   this.onScroll );
             
-
           },
+          destroyed() {
+    window.removeEventListener("scroll",   this.onScroll );
+  },
     methods: {
+      onScroll (el) {
+
+			if ((el.target.offsetHeight + el.target.scrollTop) >= el.target.scrollHeight) {
+        
+        this.getMoreData();
+                
+            
+}
+    },
+    getMoreData(){
+      this.page+=1;
+      if(this.page<=this.lastPage){
+        this.getData(); 
+      }
+       
+      },
       getData(){
-        this.axios.get('http://3.232.244.22/api/items',{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`}}).then((response) => {
-                //   this.resetForm();
+        
+        this.axios.get(`http://3.232.244.22/api/items?page=${this.page}`,{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`}}).then((response) => {
                 console.log(response.data);
                 let tableData=response.data.items.data;
-                this.items=tableData;  
+                this.lastPage=response.data.items.last_page;
+                this.tableSize=tableData.length-1;
+                if(tableData.length){
+                for(this.tableSize;this.tableSize>=0 ;this.tableSize--){
+                  this.items.push(tableData[this.tableSize]);
+                }
+                } 
               })
       },
       infoRow(item, index, button) {
-        this.$router.push('/updatetodo');
+        
+        console.log("dataIS",item)
+        this.$router.push('/updatetodo/'+ item.id );
 
         // this.infoModal.title = `Row index: ${index}`
         // this.infoModal.content = JSON.stringify(item, null, 2)
@@ -147,6 +181,8 @@ computed: {
         console.log("dataIS",item)
         this.axios.delete(`http://3.232.244.22/api/item/${item.id}`,{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`}}).then((response) => {
         console.log(response.data);
+        this.items=[];
+        this.page=1;
         this.getData();        
         })
 

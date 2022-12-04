@@ -22,6 +22,6 @@ export const routes =[
         path:'/createtodo', component: CreateTodo,
     },
     {
-        path:'/updatetodo', component: UpdateTodo,
+        path:'/updatetodo/:todoId', component: UpdateTodo,
     }
 ];

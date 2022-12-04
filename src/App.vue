@@ -59,12 +59,16 @@ export default {
 <style>
 
 .dropbtn {
-  background-color: peachpuff;
-  color: black;
+  background-color: maroon;
+  border-radius: 20px;
   padding: 16px;
+  margin-top: 10px;
+  margin-right: 10px;
   font-size: 20px;
   border: none;
   cursor: pointer;
+  font-weight: bold;
+  color: white;
 }
 
 .dropdown {
@@ -75,9 +79,11 @@ export default {
 }
 
 .dropdown-content {
+
   display: none;
   position: absolute;
-  right: 0;
+  right: 10px;
+  border-radius: 14px;
   background-color: coral;
   min-width: 89px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -91,13 +97,17 @@ export default {
   display: block;
 }
 
-.dropdown-content a:hover {background-color: peachpuff;}
+.dropdown-content a:hover {background-color: peachpuff;
+  border-radius: 14px;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
 .dropdown:hover .dropbtn {
-  background-color: white;
+  background-color: pink;
+  color:maroon;
+  border: pink ;
 }
 </style>

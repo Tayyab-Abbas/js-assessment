@@ -292,3 +292,93 @@
 .card-tab{
     background-color: white;
 }
+.table > thead{
+  background-color: maroon;
+  color: white;
+}
+.table th{
+  padding: 10px !important;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid maroon !important;
+}
+.table td{
+  background: white !important;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px 0 12px 0 !important;
+    padding-bottom: none;
+}
+
+
+.tableBtn{
+  background-color: maroon !important;
+  color: white !important;
+  padding: 8px !important;
+  border: none !important;
+  margin-right: 10px !important;
+  font-weight: bold;
+  font-size: 16px !important;
+
+}
+.tableBtn1:hover{
+  opacity: 0.8;
+
+}
+.tableBtn2:hover{
+  opacity: 0.8;
+
+}
+.btnTable{
+display: block;
+width: 100%;
+margin: auto;
+}
+
+.headTitle{
+ width: 100%;
+ display: block;
+}
+.headTitle h1{
+  width: 650px;
+  margin: auto;
+  padding: 40px;
+  color: maroon;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+ }
+ .col-form-label{
+  font-size: 20px !important;
+  font-weight: 500 !important;
+ }
+ .clearbtn{
+  background-color: maroon !important;
+  color: white !important;
+  padding: 8px !important;
+  border: none !important;
+  margin-right: 10px !important;
+  font-weight: bold;
+  font-size: 16px !important;
+  position:absolute;
+  right: 0;
+  bottom: 0;
+ }
+ .clearbtn:hover{
+  opacity:0.8;
+ }
+ .itemCl{
+  text-align: end;
+  position: relative;
+ }
+ .txt-check{
+  font-size: 20px ;
+  padding-left: 10px;
+  font-weight: bold;
+  
+ }
+ .table-responsive {
+  height:300px;
+}
