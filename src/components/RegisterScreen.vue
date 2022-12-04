@@ -32,11 +32,11 @@
   
             <div class="form-group">
                 <label>Confirm Password</label>
-                <input type="password" v-model="contacts.confirmPassword" id="confirmPassword" name="confirmPassword"
-                    class="form-control" :class="{ 'is-invalid': isValid && $v.contacts.confirmPassword.$error }" />
-                <div v-if="isValid && $v.contacts.confirmPassword.$error" class="invalid-feedback">
-                    <span v-if="!$v.contacts.confirmPassword.required">Confirm Password field is required</span>
-                    <span v-else-if="!$v.contacts.confirmPassword.sameAsPassword">Passwords should be matched</span>
+                <input type="password" v-model="contacts.password_confirmation" id="password_confirmation" name="password_confirmation"
+                    class="form-control" :class="{ 'is-invalid': isValid && $v.contacts.password_confirmation.$error }" />
+                <div v-if="isValid && $v.contacts.password_confirmation.$error" class="invalid-feedback">
+                    <span v-if="!$v.contacts.password_confirmation.required">Confirm Password field is required</span>
+                    <span v-else-if="!$v.contacts.password_confirmation.sameAsPassword">Passwords should be matched</span>
                 </div>
             </div>
   
@@ -46,6 +46,9 @@
               <div class="screen-Link">
                 <p>Already have an account? <span role="button" @click="loginUser">Login</span></p>
               </div>
+          <b-modal :id="infoModal.id" :title="infoModal.title" ok-only ok-variant='danger'  @hide="resetInfoModal">
+          <pre>{{infoModal.title}}</pre>
+          </b-modal>
           </div>
         </form>
       </div>
@@ -65,9 +68,14 @@
                 contacts: {
                     email: "",
                     password: "",
-                    confirmPassword: ""
+                    password_confirmation: ""
                 },
-                isValid: false
+                isValid: false,
+              infoModal: {
+              id: 'info-modal',
+              title: '',
+              },
+              toasterHit:false,
             };
         },
         validations: {
@@ -80,13 +88,32 @@
                     required,
                     minLength: minLength(8)
                 },
-                confirmPassword: {
+                password_confirmation: {
                     required,
                     sameAsPassword: sameAs('password')
                 }
             }
         },
         methods: {
+            onRegister(){
+                this.axios.post('http://3.232.244.22/api/register', this.contacts).then((response) => {
+                    console.log(response.data);
+                    if(response.data.success==true){
+                    this.toasterHit=true;
+                    this.infoModal.title="Registration successfull, Check email please";
+                    this.$root.$emit('bv::show::modal', this.infoModal.id, this.infoModal.title);
+                    } 
+                }).catch(err => {
+              console.log(err);
+              window.localStorage.setItem('accessToken', 'null');
+              this.toasterHit=false;
+              this.infoModal.title="The email has already been taken.";
+              this.$root.$emit('bv::show::modal', this.infoModal.id, this.infoModal.title);
+              
+             
+              })
+
+            },
             onFormSubmit() {              
                 this.isValid = true;
   
@@ -94,15 +121,16 @@
                 if (this.$v.$invalid) {
                     return;
                 }
-  
-                this.axios.post('http://localhost:8888/contacts', this.contacts).then((response) => {
-                    // this.resetForm();
-                    console.log(response.data);
-                })
+                this.onRegister();  
             },
             loginUser(){
               this.$router.push('/login');
-            }
+            },
+            resetInfoModal() {
+            this.infoModal.title = ''
+            if(this.toasterHit){
+                this.loginUser()}
+            },
         },
     };
   </script>

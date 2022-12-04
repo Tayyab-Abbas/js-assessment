@@ -379,6 +379,16 @@ margin: auto;
   font-weight: bold;
   
  }
- .table-responsive {
-  height:300px;
+.modal-header {
+  background-color: antiquewhite;}
+.close{
+  border: none;
+    background-color: maroon;
+    border-radius: 6px;
+    color: white;
 }
+.close:hover{
+  opacity: 0.9;
+}
+.modal-footer {
+  background-color: antiquewhite;}

@@ -33,6 +33,9 @@
           <div class="screen-Link">
                 <p>Do you have an account? <span role="button" @click="signUp">Sign Up</span></p>
           </div>
+          <b-modal :id="infoModal.id" :title="infoModal.title" ok-only ok-variant='danger'  @hide="resetInfoModal">
+          <pre>Please Try Again</pre>
+          </b-modal>
         </div>
       </form>
     </div>
@@ -53,8 +56,12 @@
                   email: "",
                   password: "",
               },
-              token:'xyz',
-              isValid: false
+              token:'null',
+              isValid: false,
+              infoModal: {
+              id: 'info-modal',
+              title: '',
+              },
           };
       },
       validations: {
@@ -66,7 +73,8 @@
               password: {
                   required,
               },
-          }
+          },
+          
       },
       methods: {
           onFormSubmit() {              
@@ -76,23 +84,26 @@
               if (this.$v.$invalid) {
                   return;
               }
-              this.axios.post('http://3.232.244.22/api/login', this.contacts,{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`}}).then((response) => {
-                //   this.resetForm();
+              this.axios.post('http://3.232.244.22/api/login', this.contacts).then((response) => {
                 console.log(response.data);
                 if(response.data.success==true)
                  {window.localStorage.setItem('accessToken', response.data.user.token)
                   this.$router.push('/');
                   } 
-                  else{
-                    console.log("Api failed");
-                    window.localStorage.setItem('accessToken', 'null')
-
-                  }
+              }).catch(err => {
+              console.log(err);
+              window.localStorage.setItem('accessToken', 'null');
+              this.infoModal.title="Invalid Credentials";
+              this.$root.$emit('bv::show::modal', this.infoModal.id, this.infoModal.title);
               })
+              
           },
-          signUp(){
+            signUp(){
               this.$router.push('/register');
-            }
+            },
+            resetInfoModal() {
+            this.infoModal.title = ''
+            },
           
       },
   };

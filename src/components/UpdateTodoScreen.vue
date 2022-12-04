@@ -75,7 +75,7 @@
                   title:this.title
                 }
                 this.axios.put(`http://3.232.244.22/api/item/${this.idTodo}`, object ,{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`,
-        }}).then((response) => {
+                }}).then((response) => {
                   //   this.resetForm();
                     
                     console.log(response.data);
@@ -86,6 +86,12 @@
             let tokenAvailable=window.localStorage.getItem('accessToken');
             this.tokenAvailable = tokenAvailable;
             this.idTodo=this.$router.currentRoute.params.todoId;
+            this.axios.get(`http://3.232.244.22/api/item/${this.idTodo}` ,{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`,
+            }}).then((response) => {
+                  this.description=response.data.item.description;
+                  this.title=response.data.item.title;
+                  console.log(response.data);
+                })
 
           },
   }

@@ -4,6 +4,7 @@ import Register from './components/RegisterScreen.vue'
 import TodoList from './components/TodoList.vue'
 import CreateTodo from './components/CreateTodoScreen.vue'
 import UpdateTodo from './components/UpdateTodoScreen.vue'
+import Error from './components/ErrorPage404.vue'
 
 export const routes =[
     {
@@ -23,5 +24,6 @@ export const routes =[
     },
     {
         path:'/updatetodo/:todoId', component: UpdateTodo,
-    }
+    },
+    {path: "*",component: Error}
 ];

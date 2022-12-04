@@ -75,20 +75,16 @@ overflow-y: scroll !important; background-color: white;"  v-on:scroll.capture="o
 
       <template #cell(actions)="row" >
        <div class="btnTable">
-        <b-button size="sm" @click="infoRow(row.item, row.index, $event.target)" class="mr-1 tableBtn tableBtn1">
+        <b-button size="sm" @click="infoRow(row.item)" class="mr-1 tableBtn tableBtn1">
           View/Update
         </b-button>
-        <b-button size="sm" @click="deleteRow(row.item, row.index, $event.target)" class="tableBtn tableBtn2">
+        <b-button size="sm" @click="deleteRow(row.item)" class="tableBtn tableBtn2">
            Delete
         </b-button>
        </div>
       </template>
     </b-table>
   </div>
-    <!-- Info modal -->
-    <!-- <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
-      <pre>{{ infoModal.content }}</pre>
-    </b-modal> -->
   </b-container>
 </template>
   </div>
@@ -96,7 +92,6 @@ overflow-y: scroll !important; background-color: white;"  v-on:scroll.capture="o
 
 <script>
 export default {
-  /* eslint-disable */
   
   name: 'TodoList',
   data(){
@@ -167,18 +162,12 @@ computed: {
                 } 
               })
       },
-      infoRow(item, index, button) {
+      infoRow(item) {
         
         console.log("dataIS",item)
         this.$router.push('/updatetodo/'+ item.id );
-
-        // this.infoModal.title = `Row index: ${index}`
-        // this.infoModal.content = JSON.stringify(item, null, 2)
-        // this.$root.$emit('bv::show::modal', this.infoModal.id, button)
-
       },
-      deleteRow(item, index, button) {
-        console.log("dataIS",item)
+      deleteRow(item) {
         this.axios.delete(`http://3.232.244.22/api/item/${item.id}`,{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`}}).then((response) => {
         console.log(response.data);
         this.items=[];
@@ -186,15 +175,7 @@ computed: {
         this.getData();        
         })
 
-      // this.infoModal.title = `Row index: ${index}`
-      // this.infoModal.content = JSON.stringify(item, null, 2)
-      // this.$root.$emit('bv::show::modal', this.infoModal.id, button)
-
       },
-      // resetInfoModal() {
-      //   this.infoModal.title = ''
-      //   this.infoModal.content = ''
-      // },
       createRow() {
         this.$router.push('/createtodo');
       },

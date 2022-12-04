@@ -24,7 +24,6 @@ v-if="tokenAvailable!='null'"
 </template>
 
 <script>
-/* eslint-disable */
 import TodoList from './TodoList.vue'
 export default {
   name: 'WelcomeScreen',
