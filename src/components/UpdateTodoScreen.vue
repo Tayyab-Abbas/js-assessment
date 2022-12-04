@@ -76,7 +76,6 @@
                 }
                 this.axios.put(`http://3.232.244.22/api/item/${this.idTodo}`, object ,{headers: {"Content-type": "application/json","Authorization": `Bearer ${this.tokenAvailable}`,
                 }}).then((response) => {
-                  //   this.resetForm();
                     
                     console.log(response.data);
                 })

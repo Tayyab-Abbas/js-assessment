@@ -163,8 +163,6 @@ computed: {
               })
       },
       infoRow(item) {
-        
-        console.log("dataIS",item)
         this.$router.push('/updatetodo/'+ item.id );
       },
       deleteRow(item) {

@@ -23,18 +23,18 @@ export default {
   mounted(){
     let tokenAvailable=window.localStorage.getItem('accessToken');
     this.tokenAvailable = tokenAvailable;
-    console.log(this.tokenAvailable)
+    
 
   },
   updated() {
     let tokenAvailable=window.localStorage.getItem('accessToken');
     this.tokenAvailable = tokenAvailable;
-    console.log(this.tokenAvailable)
+    
     },
   created() {
       let tokenAvailable=window.localStorage.getItem('accessToken');
     this.tokenAvailable = tokenAvailable;
-    console.log(this.tokenAvailable)
+    
     },
   watch: {
     tokenAvailable(val) {
